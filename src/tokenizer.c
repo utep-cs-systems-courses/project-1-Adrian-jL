@@ -6,9 +6,9 @@
    Zero terminators are not printable (therefore false) */
 int space_char(char c)
 {
-  //char c;
-  if (c == ' ' || c == '\t')
+  if (c == ' ' || c == '\t'){      // c is a space or tab
     return 1;
+  }
   return 0;
 }
   
@@ -17,9 +17,9 @@ int space_char(char c)
    zero terminators are not printable (therefore false) */
 int non_space_char(char c)
 {
-  //char c;
-  if (c != ' ' || c != '\t')
+  if (c != ' ' || c != '\t'){          // c i s not a space or tab
     return 1;
+  }
   return 0;
 }
 
@@ -28,27 +28,23 @@ int non_space_char(char c)
    str does not conttain any words. */
 char *word_start(char *str)
 {
-  while (*str){
-    if (str == '\0')
-      return *str;
-    else if (space_char(*str))
-      str++;
-    else if (non_space_char(*str))
-      return *str;
+  char *temp = str;           ;
+  
+  while (!non_space_char(*temp)){      // Skip spaces and/or tabs
+    temp++;
   }
-  return 0;
+  return temp;
 }
 
 /* Returns a pointer terminator char following *word */
 char *word_terminator(char *word)
 {
-  while (*word){             
-    if (non_space_char(word)       //check if the pointer value is a char
-	word++;                    //if it is a char, move pointer to next location
-	if(space_char(word)          
-	   return *word;           //return the pointed value if a space was found
+  char *temp = word_start(word);      // Go to start of word
+
+  while (non_space_char(*temp)){      // Skip non spaced characters
+    temp++;
   }
-  return 0;
+  return temp;                        // Return when space or tab char found
 }
 
 /* Counts the number of words in the string argument. */

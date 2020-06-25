@@ -63,17 +63,42 @@ void add_history(List *list, char *str)
 */
 char *get_history(List *list, int id)
 {
-
+  Item *tempItem = list->root;
+  while(tempItem != NULL){                             // Search through list until id is a match
+    char *string = tempItem->str;
+    if (tempItem->id == id){
+      return string;
+    }
+    tempItem = tempItem->next;
+  }
+  return NULL;                                         // id is not found; Return NULL
 }
 
 /* Print the entire contents of the list. */
 void print_history(List *list)
 {
+  if (list->root->id == -1){
+    printf("History: Empty\n");
+    return;
+  }
+  Item *tempItem = list->root;
+
+  while (tempItem != NULL){
+    printf("%d %s\n" , tempItem->id , tempItem->str);
+    tempItem = tempItem->next;
+  }
   
 }
 
 /* Free the history list and the strings it references. */
 void free_history(List *list)
 {
-
+  Item *iter = list->root;                                // Start at root                        
+  while (iter != NULL){                                   // Go through list 
+    Item *next = iter->next;
+    free(iter);                                           // Free current Item in list
+    iter = next;
+  }
 }
+
+#endif

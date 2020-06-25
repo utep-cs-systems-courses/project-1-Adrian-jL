@@ -69,8 +69,10 @@ int count_words(char *str)
    containing <len> chars from <inStr> */
 char *copy_str(char *inStr, short len)
 {
-  
-
+  char *temp;
+  for (int i = 0; i < len; i++){
+    inStr[i] = temp[i];
+  }
 }
 
 /* Returns a freshly allocated zero-terminated vector of freshly allocated
@@ -84,8 +86,59 @@ char *copy_str(char *inStr, short len)
 */
 char **tokenize(char* str)
 {
-  
+  char **words = mallac(sizeof(char*)*(count_words(str) + 1));   // Pointer array to store words
+  char *temp = str;                                              // Keep track of original str
+  int num_words = count_words(temp);                             // Original number of words
 
+  for(int i = 0; i < num_words; i++){
+    temp = word_start(temp);                                     // Start on first word found
+    words[i] = malloc((sizeof(char)* sub_string_length(temp)) + 1);     // Allocated needed memory
+                                                                        //        space
+    int sub_length = sub_string_lenght(temp);                    // Amount of characters
+
+    for (int j = 0; j < sub_length; j++){
+      words[i][j] = *temp;
+      temp++;
+    }
+    words[i][j] = '\0';                                          // Adds '\0' at end of string
+    temp++;                                                      // Go to next word
+  }
+  words[i] = 0;
+  return words;
 }
 
-/* Prints all tokens. */
+/* Prints all tokens.*/
+void print_tokens(char **tokens)
+{
+  char **temp = tokens;
+  while(*temp != 0){
+    printf("String: %s\n" , *temp);
+    temp++;
+  }
+}
+
+/* Frees all tokens and the vector containing them. */
+void free_tokens(char **tokens)
+{
+  char **temp = tokens;
+  while(*temp != 0){
+    free(*tokens);
+    temp++;
+  }
+}
+
+/* Get length of first word in String */
+ int sub_string_length(char *str)
+ {
+   char *temp = str;
+   temp = word_start(temp);
+   int count = 0;
+
+   while (non_space_char(*temp)){
+     count++;
+     temp++;
+   }
+   return count;
+ }
+
+#endif

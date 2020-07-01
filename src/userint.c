@@ -1,5 +1,5 @@
 #include <stdio.h>
-#inlcude "tokenizer.h"
+#include "tokenizer.h"
 #include "history.h"
 
 int checkValidChar(char *input)
@@ -12,10 +12,10 @@ int checkValidChar(char *input)
     return -1;                                                  // else retry
   }
 
-  if (input < 48 || input > 57){                               // Check if input is NOT a number
+  if (answer < 48 || answer > 57){                               // Check if input is NOT a number
     printf("Please Enter Valid Number. \n");
     return -1;
-      }
+  }
   
   return answer;
 
@@ -73,13 +73,13 @@ int main()
   }
 
   if (validChar == 4){
-    print("Enter id. \n");
+    printf("Enter id. \n");
     fgets(str, 100, stdin);
 
-    if (!checkValidChar(str){
+    if (!checkValidChar(str)){
 	printf("Invalid input. \n");
 	goto opt;
-      }
+    }
 
     int num = atoi(str);                                      // Convert String to type int
     char *id = get_history(listOne, num);

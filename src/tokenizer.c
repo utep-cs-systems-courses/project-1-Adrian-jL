@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #ifndef _TOKENIZER_
 #define _TOKENIZER_
 
@@ -52,8 +54,9 @@ int count_words(char *str)
 {
   int count = 0;
   int len = 0;
-  if (*str == NULL)
+  if (*str == '\0'){
     return 0;
+  }
 
   while (*str){
     if (*str == ' ' || *str == '\t')
@@ -86,17 +89,18 @@ char *copy_str(char *inStr, short len)
 */
 char **tokenize(char* str)
 {
-  char **words = mallac(sizeof(char*)*(count_words(str) + 1));   // Pointer array to store words
+  char **words = malloc(sizeof(char*)*(count_words(str) + 1));   // Pointer array to store words
   char *temp = str;                                              // Keep track of original str
   int num_words = count_words(temp);                             // Original number of words
-
-  for(int i = 0; i < num_words; i++){
+  
+  int i = 0;
+  for(; i < num_words; i++){
     temp = word_start(temp);                                     // Start on first word found
     words[i] = malloc((sizeof(char)* sub_string_length(temp)) + 1);     // Allocated needed memory
                                                                         //        space
-    int sub_length = sub_string_lenght(temp);                    // Amount of characters
-
-    for (int j = 0; j < sub_length; j++){
+    int sub_length = sub_string_length(temp);                           // Amount of characters
+    int j = 0;
+    for (; j < sub_length; j++){
       words[i][j] = *temp;
       temp++;
     }

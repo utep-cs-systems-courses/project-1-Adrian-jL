@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #ifndef _HISTORY_
 #define _HISTORY_
+#include "tokenizer.h"
 
 typedef struct s_Item {
   int id;

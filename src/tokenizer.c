@@ -3,6 +3,20 @@
 #ifndef _TOKENIZER_
 #define _TOKENIZER_
 
+/* Get length of first word in string. */
+int sub_string_length(char *str)
+{
+  char *temp = str;
+  temp = word_startt(temp);
+  int count = 0;
+
+  while (non_space_cahr(*temp)){
+    count++;
+    temp++;
+  }
+  return count;
+} 
+
 /* Return true (non-zero) if c is a whitespace character
    ('\t' or ' '). 
    Zero terminators are not printable (therefore false) */
@@ -72,10 +86,13 @@ int count_words(char *str)
    containing <len> chars from <inStr> */
 char *copy_str(char *inStr, short len)
 {
-  char *temp;
-  for (int i = 0; i < len; i++){
-    inStr[i] = temp[i];
+  char *temp = inStr;
+  short length = len;
+  while (inStr != '\0'){
+    length++;
+    temp++;
   }
+  return length;
 }
 
 /* Returns a freshly allocated zero-terminated vector of freshly allocated
@@ -130,19 +147,5 @@ void free_tokens(char **tokens)
     temp++;
   }
 }
-
-/* Get length of first word in String */
- int sub_string_length(char *str)
- {
-   char *temp = str;
-   temp = word_start(temp);
-   int count = 0;
-
-   while (non_space_char(*temp)){
-     count++;
-     temp++;
-   }
-   return count;
- }
 
 #endif

@@ -3,20 +3,6 @@
 #ifndef _TOKENIZER_
 #define _TOKENIZER_
 
-/* Get length of first word in string. */
-int sub_string_length(char *str)
-{
-  char *temp = str;
-  temp = word_startt(temp);
-  int count = 0;
-
-  while (non_space_cahr(*temp)){
-    count++;
-    temp++;
-  }
-  return count;
-} 
-
 /* Return true (non-zero) if c is a whitespace character
    ('\t' or ' '). 
    Zero terminators are not printable (therefore false) */
@@ -52,6 +38,20 @@ char *word_start(char *str)
   return temp;
 }
 
+/* Get length of first word in string. */
+int sub_string_length(char *str)
+{
+  char *temp = str;
+  temp = word_start(temp);
+  int count = 0;
+
+  while (non_space_char(*temp)){
+    count++;
+    temp++;
+  }
+  return count;
+}
+
 /* Returns a pointer terminator char following *word */
 char *word_terminator(char *word)
 {
@@ -69,14 +69,15 @@ int count_words(char *str)
   int count = 0;
   int len = 0;
   if (*str == '\0'){
-    return 0;
+      return 0;
   }
-
   while (*str){
-    if (*str == ' ' || *str == '\t')
+    if (space_char(*str)){
       len = 0;
-    else if (++len == 1)
+    }
+    else{
       count++;
+    }
     *str++;
   }
   return count;
@@ -86,13 +87,15 @@ int count_words(char *str)
    containing <len> chars from <inStr> */
 char *copy_str(char *inStr, short len)
 {
-  char *temp = inStr;
-  short length = len;
-  while (inStr != '\0'){
-    length++;
-    temp++;
+  char *temp = malloc(sizeof(char)*len);
+  int i = 0;
+
+  while (i < (len - 1)){
+    temp[i] = inStr[i];
+    i++;
   }
-  return length;
+  temp[len] = '\0';
+  return temp;
 }
 
 /* Returns a freshly allocated zero-terminated vector of freshly allocated
@@ -115,6 +118,7 @@ char **tokenize(char* str)
     temp = word_start(temp);                                     // Start on first word found
     words[i] = malloc((sizeof(char)* sub_string_length(temp)) + 1);     // Allocated needed memory
                                                                         //        space
+
     int sub_length = sub_string_length(temp);                           // Amount of characters
     int j = 0;
     for (; j < sub_length; j++){

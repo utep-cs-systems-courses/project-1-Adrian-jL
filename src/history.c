@@ -27,14 +27,29 @@ List* init_history()
   return myList;                                       // Return address
 }
 
+int string_length(char *c)
+{
+  int count = 0;
+  int i = 0;
+  
+  if (*c == '\0'){
+    return 0;
+  }
+  while (c[i] != '\0'){
+    i++;
+    count++;
+  }
+  return count;
+}
+
 /* Add a history item to the end of the list.
    List* list - the linked list 
    char* str - the string to store
 */
 void add_history(List *list, char *str)
 {
-  char *input = malloc(sizeof(char*) * 100);           // Allocate space and copy word
-  copy_str(str,input);
+  char *input = malloc(sizeof(char*) * 100);         // Allocate space (by size 100) and copy word
+  copy_str(str, string_length(str));
 
   if (list->root->id == -1){                           // Check if history is empty, if it is
     Item *firstItem = malloc(sizeof(Item));            // set item as root
